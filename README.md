@@ -1,5 +1,5 @@
 ## How to run
-In the project folder, run the fllowing commands:\
+In the project folder, run the following commands:
 
 **First step:**\
 `npm i` to install necessary dependencies
