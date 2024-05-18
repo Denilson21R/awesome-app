@@ -6,5 +6,5 @@ In the project folder, run the following commands:
 
 **Second step:**\
 `npm run android` to run in an android device\
-`npm run ios to` run in an ios device\
+`npm run ios` to run in an ios device\
 `npm run web` to run in an web device\
