@@ -3,9 +3,11 @@ import React, {useEffect, useState} from 'react'
 import colors from '../misc/colors'
 import SearchBar from '../components/searchBar'
 import RoundIconButton from '../components/RoundIconButton'
+import NoteInputModal from '../components/NoteInputModal'
 
 export default function note({user}) {
   const [greet, setGreet] = useState('Evening')
+  const [modalVisible, setModalVisible] = useState(false)
 
   const findGreet = () => {
     const hours = new Date().getHours()
@@ -22,16 +24,23 @@ export default function note({user}) {
     findGreet()
   }, [])
 
+  const handleOnSubmit = (title, description) => {
+    console.log(title, description)
+  }
+
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle='dark-content' backgroundColor={colors.LIGHT} />
-      <Text style={styles.header}>{`Good ${greet} ${user.name}`}</Text>
-      <SearchBar containerStyle={{ marginVertical: 15}}/>
-      <View style={[StyleSheet.absoluteFillObject, styles.emptyHeadingContainer]}>
-        <Text style={styles.emptyHeading}>ADD NOTES</Text>
-        <RoundIconButton onPress={()=>{console.log('ADD TODO')}} antIconName='plus' style={styles.addBtn} />
+    <>
+      <View style={styles.container}>
+        <StatusBar barStyle='dark-content' backgroundColor={colors.LIGHT} />
+        <Text style={styles.header}>{`Good ${greet} ${user.name}`}</Text>
+        <SearchBar containerStyle={{ marginVertical: 15}}/>
+        <View style={[StyleSheet.absoluteFillObject, styles.emptyHeadingContainer]}>
+          <Text style={styles.emptyHeading}>ADD NOTES</Text>
+          <RoundIconButton onPress={()=>{setModalVisible(true)}} antIconName='plus' style={styles.addBtn} />
+        </View>
       </View>
-    </View>
+      <NoteInputModal visible={modalVisible} onClose={()=> setModalVisible(false)} onSubmit={handleOnSubmit}/>
+    </>
   )
 }
 

@@ -10,17 +10,19 @@ export default function App() {
 
   const findUser = async () => {
     const result = await AsyncStorage.getItem('user');
-    setUser(JSON.parse(result));
+    if(result !== null){
+      setUser(JSON.parse(result));
+    }
   }
 
   useEffect(() => {
     findUser();
+    //AsyncStorage.clear();
   }, []);
   
-  return (
-    //<Intro/>
-    <Note user={user}/>
-  );
+  if(!user.name) return <Intro onFinish={findUser}/>;
+  return <Note user={user}/>
+  
 }
 
 const styles = StyleSheet.create({

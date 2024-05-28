@@ -4,12 +4,13 @@ import colors from '../misc/colors';
 import RoundIconButton from '../components/RoundIconButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function intro() {
+export default function intro({onFinish}) {
     const [name, setname] = React.useState('');
     const handleOnChangeText = text => setname(text);
     const handleSubmit = async () => {
         const user = {name: name.trim()};
         await AsyncStorage.setItem('user', JSON.stringify(user));
+        if(onFinish) onFinish(user);
     }
     
     return (
