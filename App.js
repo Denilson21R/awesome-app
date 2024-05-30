@@ -17,7 +17,7 @@ export default function App() {
 
   useEffect(() => {
     findUser();
-    //AsyncStorage.clear();
+    AsyncStorage.clear();
   }, []);
   
   if(!user.name) return <Intro onFinish={findUser}/>;
