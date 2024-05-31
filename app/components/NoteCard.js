@@ -1,13 +1,13 @@
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
 import React from 'react'
 import colors from '../misc/colors'
 
-export default function NoteCard({item}) {
+export default function NoteCard({item, onPress}) {
     return (
-        <View style={styles.container}>
+        <TouchableOpacity onPress={onPress} style={styles.container}>
             <Text style={styles.title} numberOfLines={2}>{item.title}</Text>
             <Text numberOfLines={3}>{item.description}</Text>
-        </View>
+        </TouchableOpacity>
     )
 }
 

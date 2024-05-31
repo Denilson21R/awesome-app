@@ -8,7 +8,7 @@ import NoteCard from '../components/NoteCard'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FlatList } from 'react-native'
 
-export default function note({user}) {
+export default function note({user, navigation}) {
   const [greet, setGreet] = useState('Evening')
   const [modalVisible, setModalVisible] = useState(false)
   const [notes, setNotes] = useState([])
@@ -39,7 +39,6 @@ export default function note({user}) {
   }, [])
 
   const handleOnSubmit = async (title, description) => {
-    
     const note = {
       id: Date.now(),
       title,
@@ -51,6 +50,10 @@ export default function note({user}) {
     setNotes(updateNotes)
     await AsyncStorage.setItem('notes', JSON.stringify(updateNotes))
   }
+
+  const openNote = (note) => {
+    navigation.navigate('NoteDetail', {note})
+  }
   
   return (
     <>
@@ -61,9 +64,10 @@ export default function note({user}) {
           {notes.length ? <SearchBar containerStyle={{ marginVertical: 15}}/> : null}
           
           <FlatList data={notes} numColumns={2} columnWrapperStyle={{justifyContent: 'space-between', marginBottom: 15}} keyExtractor={item => item.id.toString()} 
-            renderItem={
-              ({item}) => <NoteCard item={item}/>
-            }
+            renderItem={({item}) => (
+              <NoteCard onPress={() => openNote(item)} item={item}/>
+            )
+          }
           />
           {!notes.length ? <View style={[StyleSheet.absoluteFillObject, styles.emptyHeadingContainer]}>
             <Text style={styles.emptyHeading}>ADD NOTES</Text>
@@ -84,7 +88,8 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 25,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginTop: 20
   },
   emptyHeading: {
     fontSize: 25,

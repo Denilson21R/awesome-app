@@ -1,9 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import {createNativeStackNavigator} from '@react-navigation/native-stack'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NavigationContainer } from '@react-navigation/native';
+
 import Intro from './app/screens/intro';
 import Note from './app/screens/note';
-import { useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import NoteDetail from './app/components/NoteDetail';
+
+const stack = createNativeStackNavigator();
 
 export default function App() {
   const [user, setUser] = useState({});
@@ -17,11 +23,19 @@ export default function App() {
 
   useEffect(() => {
     findUser();
-    AsyncStorage.clear();
+    //AsyncStorage.clear();
   }, []);
+
+  const RenderNoteScreen = (props) => <Note {...props} user={user} />
   
   if(!user.name) return <Intro onFinish={findUser}/>;
-  return <Note user={user}/>
+  return <NavigationContainer>
+          <stack.Navigator screenOptions={{headerTitle: '', headerTransparent: true}}>
+            <stack.Screen name='NoteScreen' component={RenderNoteScreen} />
+            <stack.Screen name='NoteDetail' component={NoteDetail} />
+          </stack.Navigator>
+         </NavigationContainer>
+  //return <Note user={user}/>
   
 }
 
