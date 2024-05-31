@@ -8,3 +8,5 @@ In the project folder, run the following commands:
 `npm run android` to run in an android device\
 `npm run ios` to run in an ios device\
 `npm run web` to run in an web device\
+
+![Print da tela do app](assets/print-awesome-app.jpeg)
